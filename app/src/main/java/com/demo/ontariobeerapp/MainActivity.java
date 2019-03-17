@@ -2,10 +2,9 @@ package com.demo.ontariobeerapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,12 +31,13 @@ public class MainActivity extends AppCompatActivity {
         apiResponse.enqueue(new Callback<List<Beer>>() {
             @Override
             public void onResponse(Call<List<Beer>> call, Response<List<Beer>> response) {
-                List<Beer> beers = new ArrayList<Beer>();
-                beers = response.body();
+                final List<Beer> beers = response.body();
                 assert beers != null;
-                for (Beer beer: beers) {
-                    Log.d(TAG, beer.toString());
-                }
+                final BeerAdapter adapter = new BeerAdapter(beers);
+                final RecyclerView recyclerView = findViewById(R.id.recycler_view);
+                final LinearLayoutManager linearLayout = new LinearLayoutManager(getBaseContext());
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(linearLayout);
             }
 
             @Override
