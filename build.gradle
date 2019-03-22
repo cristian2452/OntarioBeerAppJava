@@ -38,4 +38,5 @@ ext {
     espressoVersion = '3.0.2'
 
     retrofitVersion = '2.5.0'
+    glideVersion = '4.9.0'
 }
