@@ -13,6 +13,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     private List<Beer> dataset;
     private Context context;
@@ -50,19 +53,20 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView name;
-        private TextView type;
-        private TextView category;
-        private TextView country;
-        private ImageView picture;
-
+        @BindView(R.id.name)
+        TextView name;
+        @BindView(R.id.type)
+        TextView type;
+        @BindView(R.id.category)
+        TextView category;
+        @BindView(R.id.country)
+        TextView country;
+        @BindView(R.id.beerPicture)
+        ImageView picture;
+        
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.name);
-            type = itemView.findViewById(R.id.type);
-            category = itemView.findViewById(R.id.category);
-            country = itemView.findViewById(R.id.country);
-            picture = itemView.findViewById(R.id.beerPicture);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
