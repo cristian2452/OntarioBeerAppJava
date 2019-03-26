@@ -1,13 +1,17 @@
 package com.demo.ontariobeerapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -34,8 +38,8 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        Beer beer = dataset.get(position);
+    public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        final Beer beer = dataset.get(position);
         viewHolder.name.setText(beer.getName());
         viewHolder.type.setText(beer.getType());
         viewHolder.category.setText(beer.getCategory());
@@ -44,6 +48,27 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
         Glide.with(context)
              .load(beer.getImageUrl())
              .into(viewHolder.picture);
+
+        viewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context,beer.getName(),Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(context, DetailsActivity.class);
+                intent.putExtra("name",beer.getName());
+                intent.putExtra("imageUrl",beer.getImageUrl());
+                intent.putExtra("type",beer.getType());
+                intent.putExtra("category",beer.getCategory());
+                intent.putExtra("country",beer.getCountry());
+                intent.putExtra("abv",beer.getAbv());
+                intent.putExtra("brewer",beer.getBrewer());
+
+                context.startActivities(new Intent[]{intent});
+
+            }
+        });
+
+
     }
 
 
@@ -63,6 +88,8 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
         TextView country;
         @BindView(R.id.beerPicture)
         ImageView picture;
+       @BindView(R.id.parent_layout)
+        LinearLayout parentLayout;
         
         ViewHolder(@NonNull View itemView) {
             super(itemView);
